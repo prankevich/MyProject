@@ -1,6 +1,6 @@
 package service
 
-import "MyProject/repository"
+import "github.com/prankevich/MyProject/repository"
 
 type Service struct {
 	repository *repository.Repository

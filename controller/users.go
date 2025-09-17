@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"MyProject/models"
 	"github.com/gin-gonic/gin"
+	"github.com/prankevich/MyProject/models"
 	"net/http"
 	"strconv"
 )

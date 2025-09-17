@@ -1,6 +1,6 @@
 package service
 
-import "MyProject/models"
+import "github.com/prankevich/MyProject/models"
 
 func (s *Service) GetAllUsers() (users []models.User, err error) {
 	users, err = s.repository.GetAllUsers()

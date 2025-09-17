@@ -1,6 +1,6 @@
 package repository
 
-import "MyProject/models"
+import "github.com/prankevich/MyProject/models"
 
 func (r *Repository) GetAllUsers() (users []models.User, err error) {
 	if err = r.db.Select(&users, `

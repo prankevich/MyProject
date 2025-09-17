@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"MyProject/service"
 	"github.com/gin-gonic/gin"
+	"github.com/prankevich/MyProject/service"
 )
 
 type Controller struct {

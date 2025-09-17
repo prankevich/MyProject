@@ -1,11 +1,11 @@
 package main
 
 import (
-	"MyProject/controller"
-	"MyProject/repository"
-	"MyProject/service"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/prankevich/MyProject/controller"
+	"github.com/prankevich/MyProject/repository"
+	"github.com/prankevich/MyProject/service"
 	"log"
 )
 

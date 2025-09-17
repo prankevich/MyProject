@@ -1,4 +1,4 @@
-module MyProject
+module github.com/prankevich/MyProject
 
 go 1.24
 
