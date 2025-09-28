@@ -1,7 +1,7 @@
 {
   "app_params": {
     "gin_mode": "debug",
-    "port_run": "7777",
+    "port_run": "7778",
     "server_url": "localhost",
     "server_name": "home"
   },
