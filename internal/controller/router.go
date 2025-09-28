@@ -5,23 +5,32 @@ import (
 	_ "github.com/prankevich/MyProject/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 func (ctrl *Controller) RegisterEndpoints() {
-
 	ctrl.router.GET("/ping", ctrl.Ping)
 	ctrl.router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	ctrl.router.GET("/users", ctrl.GetAllUsers)
-	ctrl.router.GET("/users/:id", ctrl.GetUsersByID)
-	ctrl.router.POST("/users", ctrl.CreateUsersByID)
-	ctrl.router.PUT("/users/:id", ctrl.UpdateUsersByID)
-	ctrl.router.DELETE("/users/:id", ctrl.DeleteUserByID)
+
+	ctrl.router.POST("/auth/sign-up", ctrl.SignUp)
+	ctrl.router.POST("/auth/sign-in", ctrl.SignIn)
+
+	ctrl.router.GET("/employees", ctrl.GetAllEmployees)
+	ctrl.router.GET("/employees/:id", ctrl.GetEmployeesByID)
+	ctrl.router.POST("/employees", ctrl.CreateEmployees)
+	ctrl.router.PUT("/employees/:id", ctrl.UpdateEmployeesByID)
+	ctrl.router.DELETE("/employees/:id", ctrl.DeleteEmployeesByID)
 }
 
+// Ping
+// @Summary Health-check
+// @Description Проверка сервиса
+// @Tags Ping
+// @Produce json
+// @Success 200 {object} CommonResponse
+// @Router /ping [get]
 func (ctrl *Controller) Ping(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"ping": "pong",
-	})
+	c.JSON(http.StatusOK, CommonResponse{Message: "Server is up and running!"})
 }
 func (ctrl *Controller) RunServer(address string) error {
 	ctrl.RegisterEndpoints()

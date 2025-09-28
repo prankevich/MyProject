@@ -34,74 +34,74 @@ func (m *MockServiceI) EXPECT() *MockServiceIMockRecorder {
 	return m.recorder
 }
 
-// CreateUsersByID mocks base method.
-func (m *MockServiceI) CreateUsersByID(users models.User) error {
+// CreateEmployees mocks base method.
+func (m *MockServiceI) CreateEmployees(users models.Employees) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateUsersByID", users)
+	ret := m.ctrl.Call(m, "CreateEmployees", users)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// CreateUsersByID indicates an expected call of CreateUsersByID.
-func (mr *MockServiceIMockRecorder) CreateUsersByID(users interface{}) *gomock.Call {
+// CreateEmployees indicates an expected call of CreateEmployees.
+func (mr *MockServiceIMockRecorder) CreateEmployees(users interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUsersByID", reflect.TypeOf((*MockServiceI)(nil).CreateUsersByID), users)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateEmployees", reflect.TypeOf((*MockServiceI)(nil).CreateEmployees), users)
 }
 
-// DeleteUsersByID mocks base method.
-func (m *MockServiceI) DeleteUsersByID(id int) error {
+// DeleteEmployeesByID mocks base method.
+func (m *MockServiceI) DeleteEmployeesByID(id int) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteUsersByID", id)
+	ret := m.ctrl.Call(m, "DeleteEmployeesByID", id)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// DeleteUsersByID indicates an expected call of DeleteUsersByID.
-func (mr *MockServiceIMockRecorder) DeleteUsersByID(id interface{}) *gomock.Call {
+// DeleteEmployeesByID indicates an expected call of DeleteEmployeesByID.
+func (mr *MockServiceIMockRecorder) DeleteEmployeesByID(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUsersByID", reflect.TypeOf((*MockServiceI)(nil).DeleteUsersByID), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEmployeesByID", reflect.TypeOf((*MockServiceI)(nil).DeleteEmployeesByID), id)
 }
 
-// GetAllUsers mocks base method.
-func (m *MockServiceI) GetAllUsers() ([]models.User, error) {
+// GetAllEmployees mocks base method.
+func (m *MockServiceI) GetAllEmployees() ([]models.Employees, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAllUsers")
-	ret0, _ := ret[0].([]models.User)
+	ret := m.ctrl.Call(m, "GetAllEmployees")
+	ret0, _ := ret[0].([]models.Employees)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetAllUsers indicates an expected call of GetAllUsers.
-func (mr *MockServiceIMockRecorder) GetAllUsers() *gomock.Call {
+// GetAllEmployees indicates an expected call of GetAllEmployees.
+func (mr *MockServiceIMockRecorder) GetAllEmployees() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllUsers", reflect.TypeOf((*MockServiceI)(nil).GetAllUsers))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllEmployees", reflect.TypeOf((*MockServiceI)(nil).GetAllEmployees))
 }
 
-// GetUsersByID mocks base method.
-func (m *MockServiceI) GetUsersByID(id int) (models.User, error) {
+// GetEmployeesByID mocks base method.
+func (m *MockServiceI) GetEmployeesByID(id int) (models.Employees, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUsersByID", id)
-	ret0, _ := ret[0].(models.User)
+	ret := m.ctrl.Call(m, "GetEmployeesByID", id)
+	ret0, _ := ret[0].(models.Employees)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetUsersByID indicates an expected call of GetUsersByID.
-func (mr *MockServiceIMockRecorder) GetUsersByID(id interface{}) *gomock.Call {
+// GetEmployeesByID indicates an expected call of GetEmployeesByID.
+func (mr *MockServiceIMockRecorder) GetEmployeesByID(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUsersByID", reflect.TypeOf((*MockServiceI)(nil).GetUsersByID), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEmployeesByID", reflect.TypeOf((*MockServiceI)(nil).GetEmployeesByID), id)
 }
 
-// UpdateUsersByID mocks base method.
-func (m *MockServiceI) UpdateUsersByID(users models.User) error {
+// UpdateEmployeesByID mocks base method.
+func (m *MockServiceI) UpdateEmployeesByID(users models.Employees) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateUsersByID", users)
+	ret := m.ctrl.Call(m, "UpdateEmployeesByID", users)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// UpdateUsersByID indicates an expected call of UpdateUsersByID.
-func (mr *MockServiceIMockRecorder) UpdateUsersByID(users interface{}) *gomock.Call {
+// UpdateEmployeesByID indicates an expected call of UpdateEmployeesByID.
+func (mr *MockServiceIMockRecorder) UpdateEmployeesByID(users interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUsersByID", reflect.TypeOf((*MockServiceI)(nil).UpdateUsersByID), users)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateEmployeesByID", reflect.TypeOf((*MockServiceI)(nil).UpdateEmployeesByID), users)
 }

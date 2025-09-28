@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "MyProject API Service",
-            "url": "http://test.com",
+            "url": "https://test.com",
             "email": "test@test.com"
         },
         "version": "{{.Version}}"

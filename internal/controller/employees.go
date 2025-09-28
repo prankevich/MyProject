@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-// GetAllUsers
+// GetAllEmployees
 // @Summary Получение данных пользователя
 // @Description Получения списка всех пользователей
 // @Tags User
@@ -16,16 +16,16 @@ import (
 // @Success 200 {array} CommonResponse
 // @Failure 500 {object} CommonError
 // @Router /users [get]
-func (ctrl *Controller) GetAllUsers(c *gin.Context) {
-	users, err := ctrl.service.GetAllUsers()
+func (ctrl *Controller) GetAllEmployees(c *gin.Context) {
+	employees, err := ctrl.service.GetAllEmployees()
 	if err != nil {
 		ctrl.handleError(c, err)
 	}
 
-	c.JSON(http.StatusOK, users)
+	c.JSON(http.StatusOK, employees)
 }
 
-// GetUsersByID
+// GetEmployeesByID
 // @Summary Получение данных пользователя по ID
 // @Description Получения информации о пользователе по ID
 // @Tags User
@@ -35,29 +35,29 @@ func (ctrl *Controller) GetAllUsers(c *gin.Context) {
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
 // @Router /users/{id} [get]
-func (ctrl *Controller) GetUsersByID(c *gin.Context) {
+func (ctrl *Controller) GetEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		ctrl.handleError(c, errs.ErrInvalidUserID)
+		ctrl.handleError(c, errs.ErrInvalidEmployeesID)
 		return
 	}
-	users, err := ctrl.service.GetUsersByID(id)
+	employees, err := ctrl.service.GetEmployeesByID(id)
 	if err != nil || id < 1 {
-		ctrl.handleError(c, errs.ErrInvalidUserID)
+		ctrl.handleError(c, errs.ErrInvalidEmployeesID)
 		return
 	}
-	c.JSON(http.StatusOK, users)
+	c.JSON(http.StatusOK, employees)
 }
 
-type CreateUsersRequest struct {
+type CreateEmployeesRequest struct {
 	ID    int    `json:"id"`
 	Age   int    `json:"age"`
-	Name  string `son:"name"`
+	Name  string `json:"name"`
 	Email string `json:"email"`
 }
 
-// CreateUsersByID
+// CreateEmployees
 // @Summary  Создание пользователя
 // @Description Создание карточки пользователя
 // @Tags User
@@ -69,24 +69,24 @@ type CreateUsersRequest struct {
 // @Failure 404 {object} CommonError
 // @Failure 500 {object} CommonError
 // @Router /users/{id} [put]
-func (ctrl *Controller) CreateUsersByID(c *gin.Context) {
-	var users models.User
-	if err := c.ShouldBindJSON(&users); err != nil {
+func (ctrl *Controller) CreateEmployees(c *gin.Context) {
+	var employees models.Employees
+	if err := c.ShouldBindJSON(&employees); err != nil {
 		ctrl.handleError(c, errs.ErrInvalidRequestBody)
 		return
 	}
-	if users.Name == "" || users.Email == "" || users.Age < 0 || users.ID < 0 {
+	if employees.Name == "" || employees.Email == "" || employees.Age < 0 || employees.ID < 0 {
 		ctrl.handleError(c, errs.ErrInvalidFieldValue)
 		return
 	}
-	if err := ctrl.service.CreateUsersByID(users); err != nil {
+	if err := ctrl.service.CreateEmployees(employees); err != nil {
 		ctrl.handleError(c, err)
 		return
 	}
-	c.JSON(http.StatusCreated, CommonError{"User created"})
+	c.JSON(http.StatusCreated, CommonError{"Employees created"})
 }
 
-// UpdateUsersByID
+// UpdateEmployeesByID
 // @Summary  Обновление данных пользователя
 // @Description  Обновление данных пользователя по ID
 // @Tags User
@@ -97,37 +97,40 @@ func (ctrl *Controller) CreateUsersByID(c *gin.Context) {
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
 // @Router /users/{id} [put]
-func (ctrl *Controller) UpdateUsersByID(c *gin.Context) {
+func (ctrl *Controller) UpdateEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		ctrl.handleError(c, errs.ErrInvalidUserID)
+		ctrl.handleError(c, errs.ErrInvalidEmployeesID)
 		return
 	}
 
-	var users models.User
-	if err = c.ShouldBindJSON(&users); err != nil {
+	var employees models.Employees
+	if err = c.ShouldBindJSON(&employees); err != nil {
 		ctrl.handleError(c, errs.ErrInvalidRequestBody)
 		return
 	}
-	if users.Name == "" || users.Email == "" || users.Age < 0 || users.ID < 0 {
+	if employees.Name == "" || employees.Email == "" || employees.Age < 0 || employees.ID < 0 {
 		ctrl.handleError(c, errs.ErrInvalidFieldValue)
 		return
 	}
 
-	users.ID = id
+	employees.ID = id
 
-	if err = ctrl.service.UpdateUsersByID(users); err != nil {
+	if err = ctrl.service.UpdateEmployeesByID(employees); err != nil {
 		ctrl.handleError(c, err)
 		return
 	}
+	ctrl.logger.Info().Str("func", "controller.UpdateEmployeesByID").Int("employee_id", employees.ID).
+		Msg("Сотрудник успешно обновлён")
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Users updated",
+		"message": "Employees updated",
 	})
+
 }
 
-// DeleteUserByID
+// DeleteEmployeesByID
 // @Summary  Удаление
 // @Description   Удаление данных пользователя по ID
 // @Tags User
@@ -137,7 +140,7 @@ func (ctrl *Controller) UpdateUsersByID(c *gin.Context) {
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
 // @Router /users/{id} [DELETE]
-func (ctrl *Controller) DeleteUserByID(c *gin.Context) {
+func (ctrl *Controller) DeleteEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -145,17 +148,18 @@ func (ctrl *Controller) DeleteUserByID(c *gin.Context) {
 		return
 	}
 	if id <= 0 {
-		c.JSON(http.StatusBadRequest, CommonError{"user id must be positive"})
+		c.JSON(http.StatusBadRequest, CommonError{"Employees id must be positive"})
 		return
 	}
-	if err = ctrl.service.DeleteUsersByID(id); err != nil {
+	if err = ctrl.service.DeleteEmployeesByID(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
-
+	ctrl.logger.Info().Str("func", "controller.DeleteEmployeesByID").Int("id", id).
+		Msg("Сотрудник успешно удален")
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Users deleted",
+		"message": "Employees deleted",
 	})
 }

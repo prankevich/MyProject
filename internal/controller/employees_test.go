@@ -27,7 +27,7 @@ func TestController_DeleteUserByID(t *testing.T) {
 			name:    "Valid ID - success",
 			paramID: "42",
 			mockBehaviour: func(s *mock_contracts.MockServiceI) {
-				s.EXPECT().DeleteUsersByID(42).Return(nil)
+				s.EXPECT().DeleteEmployeesByID(42).Return(nil)
 			},
 			expectedStatusCode:   http.StatusOK,
 			expectedResponseBody: `{"message":"Users deleted"}`,
@@ -54,7 +54,7 @@ func TestController_DeleteUserByID(t *testing.T) {
 			name:    "Service error",
 			paramID: "7",
 			mockBehaviour: func(s *mock_contracts.MockServiceI) {
-				s.EXPECT().DeleteUsersByID(7).Return(errors.New("database failure"))
+				s.EXPECT().DeleteEmployeesByID(7).Return(errors.New("database failure"))
 			},
 			expectedStatusCode:   http.StatusInternalServerError,
 			expectedResponseBody: `{"error":"database failure"}`,
@@ -75,7 +75,7 @@ func TestController_DeleteUserByID(t *testing.T) {
 			// Setup router
 			gin.SetMode(gin.TestMode)
 			router := gin.New()
-			router.DELETE("/users/:id", handler.DeleteUserByID)
+			router.DELETE("/users/:id", handler.DeleteEmployeesByID)
 
 			// Create request
 			req := httptest.NewRequest(http.MethodDelete, "/users/"+tc.paramID, nil)

@@ -9,6 +9,7 @@ import (
 	"github.com/prankevich/MyProject/internal/repository"
 	"github.com/prankevich/MyProject/internal/service"
 	"github.com/redis/go-redis/v9"
+	"github.com/rs/zerolog"
 	"log"
 	"os"
 )
@@ -18,9 +19,13 @@ import (
 // @contact.url http://test.com
 // @contact.email test@test.com
 func main() {
+	logger := Logger()
 	if err := config.ReadSettings(); err != nil {
-		log.Fatal(err)
+		logger.Error().Err(err).Msg("Error during reading settings")
+
+		return
 	}
+	logger.Info().Msg("Read settings successfully")
 	dsn := fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		config.AppSettings.PostgresParams.Host,
@@ -31,6 +36,7 @@ func main() {
 	)
 	db, err := sqlx.Open("postgres", dsn)
 	if err != nil {
+
 		log.Fatal(err)
 	}
 
@@ -39,15 +45,17 @@ func main() {
 		DB:       config.AppSettings.RedisParams.DB,
 		Password: "",
 	})
-	cache := repository.NewCache(rdb)
-	repo := repository.NewRepository(db)
-	ser := service.NewService(repo, cache)
-	ctrl := controller.New(ser)
+	cache := repository.NewCache(rdb, logger)
+	repo := repository.NewRepository(db, logger)
+	ser := service.NewService(repo, cache, logger)
+	ctrl := controller.New(ser, logger)
 	ctrl.RunServer(fmt.Sprintf("%s%s", ":", config.AppSettings.AppParams.PortRun))
 	if err = db.Close(); err != nil {
-		log.Fatal(err)
+		logger.Error().Err(err).Msg("Error during clousing database conectoon" + " Server")
+
 	}
-	if err = db.Close(); err != nil {
-		log.Fatal("Ошибка при подключении:", err)
-	}
+}
+func Logger() zerolog.Logger {
+	return zerolog.New(os.Stdout).With().Timestamp().Logger()
+
 }

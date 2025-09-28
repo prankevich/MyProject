@@ -5,14 +5,19 @@ import (
 	"errors"
 	"github.com/jmoiron/sqlx"
 	"github.com/prankevich/MyProject/internal/errs"
+	"github.com/rs/zerolog"
 )
 
 type Repository struct {
-	db *sqlx.DB
+	db     *sqlx.DB
+	logger zerolog.Logger
 }
 
-func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{db: db}
+func NewRepository(db *sqlx.DB, logger zerolog.Logger) *Repository {
+	return &Repository{
+		db:     db,
+		logger: logger}
+
 }
 func (r *Repository) translateError(err error) error {
 	switch {
