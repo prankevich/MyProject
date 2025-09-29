@@ -3,10 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/prankevich/MyProject/internal/config"
+
 	"github.com/prankevich/MyProject/internal/errs"
 	"github.com/prankevich/MyProject/internal/models"
-	"github.com/prankevich/MyProject/pkg"
 	"github.com/prankevich/MyProject/utils"
 )
 
@@ -32,27 +31,24 @@ func (s *Service) CreateUser(ctx context.Context, user models.User) (err error) 
 	return nil
 }
 
-func (s *Service) Authenticate(ctx context.Context, user models.User) (string, error) {
-
+func (s *Service) Authenticate(ctx context.Context, user models.User) (int, models.Role, error) {
 	userFromDB, err := s.repository.GetUserByName(ctx, user.Username)
 	if err != nil {
-		if errors.Is(err, errs.ErrNotfound) {
-			return "", errs.ErrUserNotFound
+		if !errors.Is(err, errs.ErrNotfound) {
+			return 0, "", errs.ErrUserNotFound
 		}
 
-		return "", err
+		return 0, "", err
 	}
 
 	user.Password, err = utils.GenerateHash(user.Password)
 	if err != nil {
-		return "", err
+		return 0, "", err
 	}
+
 	if userFromDB.Password != user.Password {
-		return "", errs.ErrIncorrectUsernameOrPassword
+		return 0, "", errs.ErrIncorrectUsernameOrPassword
 	}
-	token, err := pkg.GenerateToken(userFromDB.ID, config.AppSettings.AuthParams.TtlMinutes)
-	if err != nil {
-		return "", err
-	}
-	return token, nil
+
+	return userFromDB.ID, userFromDB.Role, nil
 }

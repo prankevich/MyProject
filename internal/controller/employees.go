@@ -11,11 +11,12 @@ import (
 // GetAllEmployees
 // @Summary Получение данных пользователя
 // @Description Получения списка всех пользователей
-// @Tags User
+// @Tags Employees
 // @Produce json
+// @Security BearerAuth
 // @Success 200 {array} CommonResponse
 // @Failure 500 {object} CommonError
-// @Router /users [get]
+// @Router /api/employees [get]
 func (ctrl *Controller) GetAllEmployees(c *gin.Context) {
 	ctrl.logger.Info().Str("func_name", "controller.GetAllEmployees")
 	employees, err := ctrl.service.GetAllEmployees()
@@ -29,13 +30,14 @@ func (ctrl *Controller) GetAllEmployees(c *gin.Context) {
 // GetEmployeesByID
 // @Summary Получение данных пользователя по ID
 // @Description Получения информации о пользователе по ID
-// @Tags User
+// @Tags Employees
 // @Produce json
+// @Security BearerAuth
 // @Param id path int true "id пользователя"
 // @Success 200  {object} CommonResponse
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
-// @Router /users/{id} [get]
+// @Router /api/employees/{id} [get]
 func (ctrl *Controller) GetEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
@@ -61,15 +63,16 @@ type CreateEmployeesRequest struct {
 // CreateEmployees
 // @Summary  Создание пользователя
 // @Description Создание карточки пользователя
-// @Tags User
+// @Tags Employees
 // @Consume json
 // @Produce json
-// @Param request_body body CreateUsersRequest true "информация о новом пользователе"
+// @Security BearerAuth
+// @Param request_body body CreateEmployeesRequest true "информация о новом пользователе"
 // @Success 200 {object} CommonResponse
 // @Failure 400 {object} CommonError
 // @Failure 404 {object} CommonError
 // @Failure 500 {object} CommonError
-// @Router /users/{id} [put]
+// @Router /api/employees/{id} [put]
 func (ctrl *Controller) CreateEmployees(c *gin.Context) {
 	var employees models.Employees
 	if err := c.ShouldBindJSON(&employees); err != nil {
@@ -90,14 +93,14 @@ func (ctrl *Controller) CreateEmployees(c *gin.Context) {
 // UpdateEmployeesByID
 // @Summary  Обновление данных пользователя
 // @Description  Обновление данных пользователя по ID
-// @Tags User
+// @Tags Employees
 // @Consume json
 // @Produce json
-// @Param request_body body CreateUsersRequest true "информация о пользователе"
+// @Param request_body body CreateEmployeesRequest true "информация о пользователе"
 // @Success 200 {object} CommonResponse
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
-// @Router /users/{id} [put]
+// @Router /api/employees/{id} [put]
 func (ctrl *Controller) UpdateEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
@@ -134,13 +137,13 @@ func (ctrl *Controller) UpdateEmployeesByID(c *gin.Context) {
 // DeleteEmployeesByID
 // @Summary  Удаление
 // @Description   Удаление данных пользователя по ID
-// @Tags User
+// @Tags Employees
 // @Produce json
 // @Param id path int true "id пользователя"
 // @Success 200  {object} CommonResponse
 // @Failure 400 {object} CommonError
 // @Failure 500 {object} CommonError
-// @Router /users/{id} [DELETE]
+// @Router /api/employees/{id} [DELETE]
 func (ctrl *Controller) DeleteEmployeesByID(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

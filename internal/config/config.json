@@ -17,7 +17,8 @@
   "database": 0
 },
   "auth_params": {
-    "ttl_minutes": 5
+    "ttl_minutes": 5,
+    "refresh_ttl_day" : 1
   }
 
 

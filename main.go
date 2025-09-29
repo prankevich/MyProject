@@ -18,6 +18,9 @@ import (
 // @contact.name MyProject API Service
 // @contact.url http://test.com
 // @contact.email test@test.com
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	logger := Logger()
 	if err := config.ReadSettings(); err != nil {

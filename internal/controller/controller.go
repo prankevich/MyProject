@@ -13,6 +13,7 @@ type Controller struct {
 	service contracts.ServiceI
 	router  *gin.Engine
 	logger  zerolog.Logger
+
 }
 
 func New(service contracts.ServiceI, logger zerolog.Logger) *Controller {

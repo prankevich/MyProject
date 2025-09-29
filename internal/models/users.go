@@ -9,6 +9,7 @@ type User struct {
 	Password  string    `json:"password" db:"password"`
 	CreatedAt time.Time `json:"created_at" db:"create_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"update_at"`
+	Role      Role      `json:"role" db:"role"`
 }
 
 type Role string
