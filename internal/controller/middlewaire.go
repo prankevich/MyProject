@@ -41,11 +41,9 @@ func (ctrl *Controller) checkIsAdmin(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, CommonError{Error: "role is not in context"})
 		return
 	}
-
 	if role != models.RoleAdmin {
 		c.AbortWithStatusJSON(http.StatusForbidden, CommonError{Error: "permission denied"})
 		return
 	}
-
 	c.Next()
 }

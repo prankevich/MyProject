@@ -25,6 +25,8 @@ func (s *Service) CreateUser(ctx context.Context, user models.User) (err error) 
 
 		return err
 	}
+
+	user.Role = models.RoleUser
 	if err := s.repository.CreateUser(ctx, user); err != nil {
 		return err
 	}

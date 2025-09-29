@@ -23,9 +23,9 @@ func (ctrl *Controller) RegisterEndpoints() {
 	{
 		apiG.GET("/employees", ctrl.GetAllEmployees)
 		apiG.GET("/employees/:id", ctrl.GetEmployeesByID)
-		apiG.POST("/employees", ctrl.CreateEmployees)
-		apiG.PUT("/employees/:id", ctrl.UpdateEmployeesByID)
-		apiG.DELETE("/employees/:id", ctrl.DeleteEmployeesByID)
+		apiG.POST("/employees", ctrl.checkIsAdmin, ctrl.CreateEmployees)
+		apiG.PUT("/employees/:id", ctrl.checkIsAdmin, ctrl.UpdateEmployeesByID)
+		apiG.DELETE("/employees/:id", ctrl.checkIsAdmin, ctrl.DeleteEmployeesByID)
 	}
 }
 

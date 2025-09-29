@@ -7,7 +7,7 @@ import (
 
 func (r *Repository) GetUserByID(ctx context.Context, username string) (user models.User, err error) {
 	if err = r.db.GetContext(ctx, &user, `
-		SELECT id, full_name, user_name, password, create_at, update_at 
+		SELECT id, full_name,role,user_name, password, create_at, update_at 
 		FROM users
 		WHERE id = $1`, username); err != nil {
 		r.logger.Error().Err(err).Str("func", "repository.GetUserByID").Msg("Error selecting users")
@@ -18,11 +18,12 @@ func (r *Repository) GetUserByID(ctx context.Context, username string) (user mod
 }
 
 func (r *Repository) CreateUser(ctx context.Context, users models.User) (err error) {
-	_, err = r.db.ExecContext(ctx, `INSERT INTO users (full_name, user_name, password)
-					VALUES ($1, $2, $3)`,
+	_, err = r.db.ExecContext(ctx, `INSERT INTO users (full_name, user_name, password,role)
+					VALUES ($1, $2, $3,$4)`,
 		users.FullName,
 		users.Username,
-		users.Password)
+		users.Password,
+		users.Role)
 	if err != nil {
 		r.logger.Error().Err(err).Str("func", "repository.CreateUser").Msg("Error inserting users")
 		return r.translateError(err)
@@ -33,7 +34,7 @@ func (r *Repository) CreateUser(ctx context.Context, users models.User) (err err
 
 func (r *Repository) GetUserByName(ctx context.Context, username string) (users models.User, err error) {
 	if err = r.db.GetContext(ctx, &users, `
-		SELECT full_name, user_name, password, create_at, update_at 
+		SELECT full_name, user_name, password, create_at, update_at ,role
 		FROM users
 		WHERE user_name = $1`, username); err != nil {
 		r.logger.Error().Err(err).Str("func", "repository.GetUserByName").Msg("Error selecting users")
