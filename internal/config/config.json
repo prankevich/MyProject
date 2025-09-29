@@ -16,9 +16,9 @@
   "port": "6379",
   "database": 0
 },
-  "auth_params":{
-    "access_token_ttl_minutes":5,
-    "refresh_token_ttl_day":0
+  "auth_params": {
+    "ttl_minutes": 5
   }
+
 
 }

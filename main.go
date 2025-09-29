@@ -31,7 +31,7 @@ func main() {
 		config.AppSettings.PostgresParams.Host,
 		config.AppSettings.PostgresParams.Port,
 		config.AppSettings.PostgresParams.User,
-		os.Getenv("PASWSWORD_DB"),
+		os.Getenv("PASSWORD_DB"),
 		config.AppSettings.PostgresParams.Database,
 	)
 	db, err := sqlx.Open("postgres", dsn)

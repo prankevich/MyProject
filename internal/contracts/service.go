@@ -14,4 +14,5 @@ type ServiceI interface {
 	UpdateEmployeesByID(users models.Employees) (err error)
 	DeleteEmployeesByID(id int) (err error)
 	CreateUser(ctx context.Context, users models.User) (err error)
+	Authenticate(ctx context.Context, user models.User) (string, error)
 }

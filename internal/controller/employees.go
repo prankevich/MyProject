@@ -17,6 +17,7 @@ import (
 // @Failure 500 {object} CommonError
 // @Router /users [get]
 func (ctrl *Controller) GetAllEmployees(c *gin.Context) {
+	ctrl.logger.Info().Str("func_name", "controller.GetAllEmployees")
 	employees, err := ctrl.service.GetAllEmployees()
 	if err != nil {
 		ctrl.handleError(c, err)

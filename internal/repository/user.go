@@ -17,12 +17,12 @@ func (r *Repository) GetUserByID(ctx context.Context, username string) (user mod
 	return user, nil
 }
 
-func (r *Repository) CreateUser(ctx context.Context, user models.User) (err error) {
+func (r *Repository) CreateUser(ctx context.Context, users models.User) (err error) {
 	_, err = r.db.ExecContext(ctx, `INSERT INTO users (full_name, user_name, password)
 					VALUES ($1, $2, $3)`,
-		user.FullName,
-		user.Username,
-		user.Password)
+		users.FullName,
+		users.Username,
+		users.Password)
 	if err != nil {
 		r.logger.Error().Err(err).Str("func", "repository.CreateUser").Msg("Error inserting users")
 		return r.translateError(err)
@@ -31,8 +31,8 @@ func (r *Repository) CreateUser(ctx context.Context, user models.User) (err erro
 	return nil
 }
 
-func (r *Repository) GetUserByName(ctx context.Context, username string) (user models.User, err error) {
-	if err = r.db.GetContext(ctx, &user, `
+func (r *Repository) GetUserByName(ctx context.Context, username string) (users models.User, err error) {
+	if err = r.db.GetContext(ctx, &users, `
 		SELECT full_name, user_name, password, create_at, update_at 
 		FROM users
 		WHERE user_name = $1`, username); err != nil {
@@ -40,5 +40,5 @@ func (r *Repository) GetUserByName(ctx context.Context, username string) (user m
 		return models.User{}, r.translateError(err)
 	}
 
-	return user, nil
+	return users, nil
 }

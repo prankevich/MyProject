@@ -9,4 +9,6 @@ var (
 	ErrInvalidRequestBody    = errors.New("invalid request body")
 	ErrInvalidFieldValue     = errors.New("invalid field value")
 	ErrUserNameAlreadyExists = errors.New("user name already exists")
+	ErrUserNotFound          = errors.New("user not found")
+	ErrIncorrectUsernameOrPassword = errors.New("incorrect username or password")
 )
