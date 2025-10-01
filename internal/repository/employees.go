@@ -11,7 +11,7 @@ func (r *Repository) GetAllEmployees(ctx context.Context) (employees []models.Em
 		FROM employees
 		ORDER BY id`); err != nil {
 		r.logger.Error().Err(err).Str("func", "repository.GetAllEmployees").Msg("Error selecting users")
-
+		return
 	}
 
 	return employees, nil
