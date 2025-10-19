@@ -72,7 +72,7 @@ type CreateEmployeesRequest struct {
 // @Failure 400 {object} CommonError
 // @Failure 404 {object} CommonError
 // @Failure 500 {object} CommonError
-// @Router /api/employees/{id} [put]
+// @Router /api/employees/ [post]
 func (ctrl *Controller) CreateEmployees(c *gin.Context) {
 	var employees models.Employees
 	if err := c.ShouldBindJSON(&employees); err != nil {
@@ -96,6 +96,7 @@ func (ctrl *Controller) CreateEmployees(c *gin.Context) {
 // @Tags Employees
 // @Consume json
 // @Produce json
+// @Security BearerAuth
 // @Param request_body body CreateEmployeesRequest true "информация о пользователе"
 // @Success 200 {object} CommonResponse
 // @Failure 400 {object} CommonError

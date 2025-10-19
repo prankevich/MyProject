@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	_ "github.com/prankevich/MyProject/docs"
 	swaggerFiles "github.com/swaggo/files"
@@ -11,7 +12,6 @@ import (
 func (ctrl *Controller) RegisterEndpoints() {
 	ctrl.router.GET("/ping", ctrl.Ping)
 	ctrl.router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	authG := ctrl.router.Group("/auth")
 	{
 		authG.POST("/sign-up", ctrl.SignUp)
@@ -23,8 +23,8 @@ func (ctrl *Controller) RegisterEndpoints() {
 	{
 		apiG.GET("/employees", ctrl.GetAllEmployees)
 		apiG.GET("/employees/:id", ctrl.GetEmployeesByID)
-		apiG.POST("/employees", ctrl.checkIsAdmin, ctrl.CreateEmployees)
-		apiG.PUT("/employees/:id", ctrl.checkIsAdmin, ctrl.UpdateEmployeesByID)
+		apiG.POST("/employees", ctrl.CreateEmployees)
+		apiG.PUT("/employees/:id", ctrl.UpdateEmployeesByID)
 		apiG.DELETE("/employees/:id", ctrl.checkIsAdmin, ctrl.DeleteEmployeesByID)
 	}
 }
@@ -40,6 +40,7 @@ func (ctrl *Controller) Ping(c *gin.Context) {
 	c.JSON(http.StatusOK, CommonResponse{Message: "Server is up and running!"})
 }
 func (ctrl *Controller) RunServer(address string) error {
+	pprof.Register(ctrl.router)
 	ctrl.RegisterEndpoints()
 	if err := ctrl.router.Run(address); err != nil {
 		return err

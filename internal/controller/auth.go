@@ -11,7 +11,7 @@ import (
 
 type SignUpRequest struct {
 	FullName string `json:"full_name"`
-	Username string `json:"username"`
+	Username string `json:"user_name"`
 	Password string `json:"password"`
 }
 
